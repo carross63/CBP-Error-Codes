@@ -1,0 +1,59 @@
+<template>
+    <aside class="sidebar" aria-label="Error code filters">
+        <div class="sidebar__section">
+            <label class="sidebar__label" for="error-search">Search</label>
+            <input
+                id="error-search"
+                type="search"
+                class="sidebar__search-input"
+                placeholder="Code or keyword, e.g. 439, quantity..."
+                value={searchTerm}
+                oninput={handleSearchInput}
+            />
+        </div>
+
+        <div class="sidebar__summary">{resultsSummary}</div>
+
+        <template lwc:if={hasActiveFilters}>
+            <button type="button" class="sidebar__reset" onclick={handleReset}>Clear all filters</button>
+        </template>
+
+        <div class="sidebar__section">
+            <h2 class="sidebar__label">Transaction flow</h2>
+            <ul class="facet-list">
+                <li>
+                    <button type="button" class={allFlowsClass} data-value="" onclick={handleFlowClick}>
+                        <span>All flows</span>
+                    </button>
+                </li>
+                <template for:each={flowOptions} for:item="flow">
+                    <li key={flow.value}>
+                        <button type="button" class={flow.cssClass} data-value={flow.value} onclick={handleFlowClick}>
+                            <span>{flow.label}</span>
+                            <span class="facet-pill__count">{flow.count}</span>
+                        </button>
+                    </li>
+                </template>
+            </ul>
+        </div>
+
+        <div class="sidebar__section">
+            <h2 class="sidebar__label">Category</h2>
+            <ul class="facet-list">
+                <li>
+                    <button type="button" class={allCategoriesClass} data-value="" onclick={handleCategoryClick}>
+                        <span>All categories</span>
+                    </button>
+                </li>
+                <template for:each={categoryOptions} for:item="cat">
+                    <li key={cat.value}>
+                        <button type="button" class={cat.cssClass} data-value={cat.value} onclick={handleCategoryClick}>
+                            <span>{cat.label}</span>
+                            <span class="facet-pill__count">{cat.count}</span>
+                        </button>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </aside>
+</template>

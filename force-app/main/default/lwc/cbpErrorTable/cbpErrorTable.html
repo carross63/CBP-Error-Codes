@@ -1,0 +1,112 @@
+<template>
+    <div class="table-panel">
+        <template lwc:if={hasResults}>
+            <div class="table-wrap">
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th class="col-code" scope="col">
+                                <button type="button" class={codeHeaderClass} data-field="code" onclick={handleSort}>
+                                    Code <span class="grid__sort-icon">{codeSortIcon}</span>
+                                </button>
+                            </th>
+                            <th class="col-narr" scope="col">
+                                <button type="button" class={narrativeHeaderClass} data-field="narrative" onclick={handleSort}>
+                                    Narrative <span class="grid__sort-icon">{narrativeSortIcon}</span>
+                                </button>
+                            </th>
+                            <th class="col-cat" scope="col">
+                                <button type="button" class={categoryHeaderClass} data-field="category" onclick={handleSort}>
+                                    Category <span class="grid__sort-icon">{categorySortIcon}</span>
+                                </button>
+                            </th>
+                            <th class="col-flow" scope="col">
+                                <button type="button" class={flowHeaderClass} data-field="flow" onclick={handleSort}>
+                                    Flow <span class="grid__sort-icon">{flowSortIcon}</span>
+                                </button>
+                            </th>
+                            <th class="col-date" scope="col">
+                                <button type="button" class={dateHeaderClass} data-field="dateUpdated" onclick={handleSort}>
+                                    Updated <span class="grid__sort-icon">{dateSortIcon}</span>
+                                </button>
+                            </th>
+                            <th class="col-action" scope="col">
+                                <span class="sr-only">Details</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={pageRows} for:item="row">
+                            <tr key={row.id} class={row.rowClass}>
+                                <td class="col-code">
+                                    <span class="code-pill">{row.code}</span>
+                                </td>
+                                <td class="col-narr">
+                                    <span class="narr">{row.narrative}</span>
+                                </td>
+                                <td class="col-cat">
+                                    <span class="cat-tag">{row.category}</span>
+                                </td>
+                                <td class="col-flow">
+                                    <span class="flow-tag">{row.flow}</span>
+                                </td>
+                                <td class="col-date">{row.displayDate}</td>
+                                <td class="col-action">
+                                    <button
+                                        type="button"
+                                        class="row-toggle"
+                                        data-id={row.id}
+                                        onclick={handleRowToggle}
+                                        aria-expanded={row.isExpanded}
+                                    >
+                                        {row.toggleIcon} {row.toggleLabel}
+                                    </button>
+                                </td>
+                            </tr>
+                            <template lwc:if={row.isExpanded}>
+                                <tr key={row.detailKey} class="error-detail-row">
+                                    <td colspan="6">
+                                        <div class="error-detail">
+                                            <h3 class="error-detail__title">
+                                                Condition code {row.code} &mdash; {row.narrative}
+                                            </h3>
+                                            <p class="error-detail__explanation">{row.explanation}</p>
+                                            <dl class="error-detail__meta">
+                                                <div>
+                                                    <dt>Category</dt>
+                                                    <dd>{row.category}</dd>
+                                                </div>
+                                                <div>
+                                                    <dt>Transaction flow</dt>
+                                                    <dd>{row.flow}</dd>
+                                                </div>
+                                                <div>
+                                                    <dt>Last updated</dt>
+                                                    <dd>{row.displayDate}</dd>
+                                                </div>
+                                            </dl>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-foot">
+                <span class="table-foot__count">{resultCountLabel}</span>
+                <div class="pager">
+                    <button type="button" class="btn btn_sm" disabled={isFirstPage} onclick={handlePrev}>Prev</button>
+                    <span class="pager__info">{pageInfo}</span>
+                    <button type="button" class="btn btn_sm" disabled={isLastPage} onclick={handleNext}>Next</button>
+                </div>
+            </div>
+        </template>
+
+        <template lwc:else>
+            <div class="table-empty">
+                No error codes match your current filters. Try clearing a filter or adjusting your search.
+            </div>
+        </template>
+    </div>
+</template>

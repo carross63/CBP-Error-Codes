@@ -1,0 +1,114 @@
+:host {
+    display: block;
+}
+
+.notice-bar {
+    background: var(--cbp-gold-5);
+    border-bottom: 1px solid var(--cbp-gold-20);
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 20px;
+    color: var(--cbp-text-darker);
+}
+
+.notice-bar__tag {
+    background: var(--cbp-gold-30);
+    color: #1b1b1b;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: var(--cbp-radius);
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.masthead {
+    background: var(--cbp-surface);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 20px;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.12);
+    position: relative;
+    z-index: 3;
+    border-bottom: 3px solid var(--ace-brand);
+}
+
+.masthead__brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.masthead__mark {
+    width: 44px;
+    height: 44px;
+    flex: none;
+}
+
+.masthead__agency {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--cbp-accent);
+    font-weight: 700;
+}
+
+.masthead__app {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--cbp-navy-deep);
+    margin: 2px 0 0;
+}
+
+.masthead__meta {
+    display: flex;
+    align-items: center;
+}
+
+.masthead__count {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cbp-primary-dark);
+    background: var(--cbp-primary-light);
+    border-radius: 999px;
+    padding: 6px 14px;
+    white-space: nowrap;
+}
+
+.portal-nav {
+    background: var(--cbp-surface);
+    border-bottom: 1px solid var(--cbp-line);
+}
+
+.portal-nav ul {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    list-style: none;
+    display: flex;
+    gap: 2px;
+}
+
+.portal-nav__item {
+    padding: 12px 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cbp-muted);
+    border-bottom: 4px solid transparent;
+}
+
+.portal-nav__item_active {
+    color: var(--ace-brand-dark);
+    border-bottom-color: var(--ace-brand);
+}
+
+@media (max-width: 620px) {
+    .masthead {
+        flex-wrap: wrap;
+    }
+}

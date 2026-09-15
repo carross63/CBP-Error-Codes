@@ -1,0 +1,38 @@
+<template>
+    <div class="cbp-app">
+        <c-cbp-error-header page-title={pageTitle} total-count={totalCount}></c-cbp-error-header>
+
+        <template lwc:if={isLoading}>
+            <div class="cbp-app__status">
+                <lightning-spinner alternative-text="Loading error codes" size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:elseif={loadError}>
+            <div class="cbp-app__status cbp-app__status_error">
+                We couldn't load the error code reference data. Please refresh the page or try again later.
+            </div>
+        </template>
+
+        <template lwc:else>
+            <div class="cbp-app__body">
+                <c-cbp-error-sidebar
+                    search-term={searchTerm}
+                    selected-category={selectedCategory}
+                    selected-flow={selectedFlow}
+                    categories={categories}
+                    flows={flows}
+                    total-count={totalCount}
+                    filtered-count={filteredCount}
+                    has-active-filters={hasActiveFilters}
+                    onsearch={handleSearch}
+                    oncategorychange={handleCategoryChange}
+                    onflowchange={handleFlowChange}
+                    onreset={handleResetFilters}
+                ></c-cbp-error-sidebar>
+
+                <c-cbp-error-table errors={filteredErrors} page-size={pageSize}></c-cbp-error-table>
+            </div>
+        </template>
+    </div>
+</template>

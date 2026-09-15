@@ -1,0 +1,37 @@
+<template>
+    <div class="notice-bar">
+        <span class="notice-bar__tag">Unofficial reference</span>
+        <span class="notice-bar__text">
+            Independent lookup tool for CATAIR/ACE condition codes. Not affiliated with, endorsed by,
+            or operated by U.S. Customs and Border Protection or DHS, and not connected to the live ACE system.
+        </span>
+    </div>
+
+    <header class="masthead">
+        <div class="masthead__brand">
+            <svg class="masthead__mark" viewBox="0 0 48 48" role="img" aria-label="Site mark">
+                <circle cx="24" cy="24" r="23" fill="var(--cbp-navy-deep)" stroke="var(--cbp-gold-30)" stroke-width="2"></circle>
+                <path d="M24 12 L34 17 L34 25 C34 32 30 36.5 24 39 C18 36.5 14 32 14 25 L14 17 Z"
+                      fill="#ffffff" opacity="0.92"></path>
+                <text x="24" y="28" text-anchor="middle" font-size="10" font-weight="700" fill="var(--cbp-navy-deep)">ACE</text>
+            </svg>
+            <div class="masthead__titles">
+                <div class="masthead__agency">U.S. Customs and Border Protection &middot; Trade</div>
+                <h1 class="masthead__app">{pageTitle}</h1>
+            </div>
+        </div>
+        <div class="masthead__meta">
+            <template lwc:if={formattedCount}>
+                <span class="masthead__count">{formattedCount} condition codes</span>
+            </template>
+        </div>
+    </header>
+
+    <nav class="portal-nav" aria-label="Primary">
+        <ul>
+            <li class="portal-nav__item portal-nav__item_active">
+                <span>Error Code Dictionary</span>
+            </li>
+        </ul>
+    </nav>
+</template>

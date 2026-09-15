@@ -1,0 +1,11 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true
+    }
+  ],
+  "name": "CBP-Error-Codes",
+  "namespace": "",
+  "sourceApiVersion": "60.0"
+}
