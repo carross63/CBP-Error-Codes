@@ -1,33 +1,53 @@
 <template>
-    <div class="table-panel">
+    <div class="table-card">
         <template lwc:if={hasResults}>
             <div class="table-wrap">
-                <table class="grid">
+                <table>
                     <thead>
                         <tr>
                             <th class="col-code" scope="col">
                                 <button type="button" class={codeHeaderClass} data-field="code" onclick={handleSort}>
-                                    Code <span class="grid__sort-icon">{codeSortIcon}</span>
+                                    Code
+                                    <svg class="sort-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M7 4V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M3.5 8L7 4.2L10.5 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M17 20V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M20.5 16L17 19.8L13.5 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 </button>
                             </th>
-                            <th class="col-narr" scope="col">
-                                <button type="button" class={narrativeHeaderClass} data-field="narrative" onclick={handleSort}>
-                                    Narrative <span class="grid__sort-icon">{narrativeSortIcon}</span>
-                                </button>
-                            </th>
+                            <th class="col-narr" scope="col">Narrative</th>
                             <th class="col-cat" scope="col">
                                 <button type="button" class={categoryHeaderClass} data-field="category" onclick={handleSort}>
-                                    Category <span class="grid__sort-icon">{categorySortIcon}</span>
+                                    Category
+                                    <svg class="sort-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M7 4V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M3.5 8L7 4.2L10.5 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M17 20V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M20.5 16L17 19.8L13.5 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 </button>
                             </th>
                             <th class="col-flow" scope="col">
                                 <button type="button" class={flowHeaderClass} data-field="flow" onclick={handleSort}>
-                                    Flow <span class="grid__sort-icon">{flowSortIcon}</span>
+                                    Flow
+                                    <svg class="sort-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M7 4V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M3.5 8L7 4.2L10.5 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M17 20V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M20.5 16L17 19.8L13.5 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 </button>
                             </th>
                             <th class="col-date" scope="col">
                                 <button type="button" class={dateHeaderClass} data-field="dateUpdated" onclick={handleSort}>
-                                    Updated <span class="grid__sort-icon">{dateSortIcon}</span>
+                                    Updated
+                                    <svg class="sort-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M7 4V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M3.5 8L7 4.2L10.5 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M17 20V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M20.5 16L17 19.8L13.5 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 </button>
                             </th>
                             <th class="col-action" scope="col">
@@ -42,24 +62,24 @@
                                     <span class="code-pill">{row.code}</span>
                                 </td>
                                 <td class="col-narr">
-                                    <span class="narr">{row.narrative}</span>
+                                    <span class="narrative">{row.narrative}</span>
                                 </td>
                                 <td class="col-cat">
-                                    <span class="cat-tag">{row.category}</span>
+                                    <span class="tag">{row.category}</span>
                                 </td>
                                 <td class="col-flow">
-                                    <span class="flow-tag">{row.flow}</span>
+                                    <span class="tag">{row.flow}</span>
                                 </td>
-                                <td class="col-date">{row.displayDate}</td>
+                                <td class="col-date updated">{row.displayDate}</td>
                                 <td class="col-action">
                                     <button
                                         type="button"
-                                        class="row-toggle"
+                                        class="view-details"
                                         data-id={row.id}
                                         onclick={handleRowToggle}
                                         aria-expanded={row.isExpanded}
                                     >
-                                        {row.toggleIcon} {row.toggleLabel}
+                                        {row.toggleLabel}
                                     </button>
                                 </td>
                             </tr>
@@ -93,12 +113,45 @@
                     </tbody>
                 </table>
             </div>
-            <div class="table-foot">
-                <span class="table-foot__count">{resultCountLabel}</span>
-                <div class="pager">
-                    <button type="button" class="btn btn_sm" disabled={isFirstPage} onclick={handlePrev}>Prev</button>
-                    <span class="pager__info">{pageInfo}</span>
-                    <button type="button" class="btn btn_sm" disabled={isLastPage} onclick={handleNext}>Next</button>
+
+            <div class="table-footer">
+                <div class="rows-per-page">
+                    <label for="rowsPerPage">Rows per page</label>
+                    <select id="rowsPerPage" onchange={handlePageSizeChange}>
+                        <template for:each={pageSizeOptions} for:item="opt">
+                            <option key={opt.value} value={opt.value} selected={opt.isSelected}>{opt.label}</option>
+                        </template>
+                    </select>
+                </div>
+
+                <div class="footer-summary">{resultsSummary}</div>
+
+                <div class="pagination">
+                    <button type="button" class="page-btn" disabled={isFirstPage} onclick={handlePrev} aria-label="Previous page">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10.5 5.5L4 12L10.5 18.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="page-numbers">
+                        <template for:each={pageNumbers} for:item="pg">
+                            <button
+                                lwc:if={pg.isPage}
+                                key={pg.key}
+                                type="button"
+                                class={pg.cssClass}
+                                data-page={pg.value}
+                                onclick={handlePageClick}
+                            >{pg.value}</button>
+                            <span lwc:else key={pg.key} class="page-ellipsis">&hellip;</span>
+                        </template>
+                    </div>
+                    <button type="button" class="page-btn" disabled={isLastPage} onclick={handleNext} aria-label="Next page">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13.5 5.5L20 12L13.5 18.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </template>

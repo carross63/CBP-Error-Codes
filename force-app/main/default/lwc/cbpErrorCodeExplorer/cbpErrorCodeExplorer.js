@@ -13,7 +13,6 @@ export default class CbpErrorCodeExplorer extends LightningElement {
 
     searchTerm = '';
     selectedCategory = ALL_VALUE;
-    selectedFlow = ALL_VALUE;
 
     connectedCallback() {
         this.loadErrorCodes();
@@ -41,21 +40,9 @@ export default class CbpErrorCodeExplorer extends LightningElement {
     }
 
     get categories() {
-        return this.buildFacet('category', this.selectedFlow);
-    }
-
-    get flows() {
-        return this.buildFacet('flow', this.selectedCategory);
-    }
-
-    buildFacet(field, coFilterValue) {
-        const coField = field === 'category' ? 'flow' : 'category';
         const counts = new Map();
         this.allErrors.forEach((row) => {
-            if (coFilterValue && row[coField] !== coFilterValue) {
-                return;
-            }
-            const key = row[field] || 'Other';
+            const key = row.category || 'Other';
             counts.set(key, (counts.get(key) || 0) + 1);
         });
         return Array.from(counts.entries())
@@ -67,9 +54,6 @@ export default class CbpErrorCodeExplorer extends LightningElement {
         const term = this.searchTerm.trim().toLowerCase();
         return this.allErrors.filter((row) => {
             if (this.selectedCategory && row.category !== this.selectedCategory) {
-                return false;
-            }
-            if (this.selectedFlow && row.flow !== this.selectedFlow) {
                 return false;
             }
             if (!term) {
@@ -88,7 +72,7 @@ export default class CbpErrorCodeExplorer extends LightningElement {
     }
 
     get hasActiveFilters() {
-        return Boolean(this.searchTerm || this.selectedCategory || this.selectedFlow);
+        return Boolean(this.searchTerm || this.selectedCategory);
     }
 
     handleSearch(event) {
@@ -99,13 +83,8 @@ export default class CbpErrorCodeExplorer extends LightningElement {
         this.selectedCategory = event.detail.value;
     }
 
-    handleFlowChange(event) {
-        this.selectedFlow = event.detail.value;
-    }
-
     handleResetFilters() {
         this.searchTerm = '';
         this.selectedCategory = ALL_VALUE;
-        this.selectedFlow = ALL_VALUE;
     }
 }

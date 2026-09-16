@@ -1,6 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
 const DEFAULT_PAGE_SIZE = 25;
+const PAGE_SIZE_OPTIONS = [10, 25, 50];
 
 export default class CbpErrorTable extends LightningElement {
     @api pageSize = DEFAULT_PAGE_SIZE;
@@ -10,6 +11,7 @@ export default class CbpErrorTable extends LightningElement {
     sortField = 'code';
     sortDirection = 'asc';
     expandedId = null;
+    selectedPageSize = null;
 
     @api
     get errors() {
@@ -20,6 +22,19 @@ export default class CbpErrorTable extends LightningElement {
         this._errors = value || [];
         this.currentPage = 1;
         this.expandedId = null;
+    }
+
+    get effectivePageSize() {
+        return this.selectedPageSize || this.pageSize;
+    }
+
+    get pageSizeOptions() {
+        const current = this.effectivePageSize;
+        return PAGE_SIZE_OPTIONS.map((size) => ({
+            value: size,
+            label: String(size),
+            isSelected: size === current
+        }));
     }
 
     get sortedErrors() {
@@ -44,7 +59,7 @@ export default class CbpErrorTable extends LightningElement {
     }
 
     get totalPages() {
-        return Math.max(1, Math.ceil(this.totalCount / this.pageSize));
+        return Math.max(1, Math.ceil(this.totalCount / this.effectivePageSize));
     }
 
     get safeCurrentPage() {
@@ -53,28 +68,68 @@ export default class CbpErrorTable extends LightningElement {
 
     get pageRows() {
         const page = this.safeCurrentPage;
-        const start = (page - 1) * this.pageSize;
-        return this.sortedErrors.slice(start, start + this.pageSize).map((row) => {
+        const size = this.effectivePageSize;
+        const start = (page - 1) * size;
+        return this.sortedErrors.slice(start, start + size).map((row) => {
             const isExpanded = row.id === this.expandedId;
             return {
                 ...row,
                 isExpanded,
                 rowClass: isExpanded ? 'error-row error-row_expanded' : 'error-row',
                 toggleLabel: isExpanded ? 'Hide details' : 'View details',
-                toggleIcon: isExpanded ? '▾' : '▸',
                 detailKey: `${row.id}-detail`,
                 displayDate: row.dateUpdated || '—'
             };
         });
     }
 
-    get pageInfo() {
-        return `Page ${this.safeCurrentPage} of ${this.totalPages}`;
+    get resultsSummary() {
+        const total = this.totalCount;
+        if (total === 0) {
+            return 'Showing 0 of 0 codes';
+        }
+        const size = this.effectivePageSize;
+        const start = (this.safeCurrentPage - 1) * size + 1;
+        const end = Math.min(total, start + size - 1);
+        return `Showing ${start.toLocaleString()}–${end.toLocaleString()} of ${total.toLocaleString()} codes`;
     }
 
-    get resultCountLabel() {
-        const count = this.totalCount;
-        return `${count.toLocaleString()} result${count === 1 ? '' : 's'}`;
+    get pageNumbers() {
+        const total = this.totalPages;
+        const current = this.safeCurrentPage;
+        const pages = [];
+
+        const addPage = (num) => {
+            pages.push({
+                isPage: true,
+                key: `p-${num}`,
+                value: num,
+                cssClass: num === current ? 'page-num page-num_active' : 'page-num'
+            });
+        };
+        const addEllipsis = (key) => pages.push({ isPage: false, key });
+
+        if (total <= 7) {
+            for (let i = 1; i <= total; i += 1) {
+                addPage(i);
+            }
+            return pages;
+        }
+
+        addPage(1);
+        if (current > 3) {
+            addEllipsis('e-start');
+        }
+        const start = Math.max(2, current - 1);
+        const end = Math.min(total - 1, current + 1);
+        for (let i = start; i <= end; i += 1) {
+            addPage(i);
+        }
+        if (current < total - 2) {
+            addEllipsis('e-end');
+        }
+        addPage(total);
+        return pages;
     }
 
     get isFirstPage() {
@@ -93,10 +148,6 @@ export default class CbpErrorTable extends LightningElement {
         return this.headerClass('code');
     }
 
-    get narrativeHeaderClass() {
-        return this.headerClass('narrative');
-    }
-
     get categoryHeaderClass() {
         return this.headerClass('category');
     }
@@ -110,34 +161,7 @@ export default class CbpErrorTable extends LightningElement {
     }
 
     headerClass(field) {
-        return this.sortField === field ? 'grid__sort-btn grid__sort-btn_active' : 'grid__sort-btn';
-    }
-
-    sortIconFor(field) {
-        if (this.sortField !== field) {
-            return '';
-        }
-        return this.sortDirection === 'asc' ? '▲' : '▼';
-    }
-
-    get codeSortIcon() {
-        return this.sortIconFor('code');
-    }
-
-    get narrativeSortIcon() {
-        return this.sortIconFor('narrative');
-    }
-
-    get categorySortIcon() {
-        return this.sortIconFor('category');
-    }
-
-    get flowSortIcon() {
-        return this.sortIconFor('flow');
-    }
-
-    get dateSortIcon() {
-        return this.sortIconFor('dateUpdated');
+        return this.sortField === field ? 'col-sort-btn col-sort-btn_active' : 'col-sort-btn';
     }
 
     handleSort(event) {
@@ -153,6 +177,15 @@ export default class CbpErrorTable extends LightningElement {
     handleRowToggle(event) {
         const id = event.currentTarget.dataset.id;
         this.expandedId = this.expandedId === id ? null : id;
+    }
+
+    handlePageSizeChange(event) {
+        this.selectedPageSize = Number(event.target.value);
+        this.currentPage = 1;
+    }
+
+    handlePageClick(event) {
+        this.currentPage = Number(event.currentTarget.dataset.page);
     }
 
     handlePrev() {

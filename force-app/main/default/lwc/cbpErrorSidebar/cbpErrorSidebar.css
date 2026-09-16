@@ -1,117 +1,125 @@
 :host {
     display: block;
-    flex: 0 0 260px;
-    width: 260px;
+    flex: 0 0 280px;
+    width: 280px;
 }
 
 .sidebar {
-    background: var(--cbp-surface);
-    border: 1px solid var(--cbp-line);
-    border-radius: var(--cbp-radius-lg);
-    box-shadow: var(--cbp-shadow);
-    padding: 18px 16px 22px;
+    background: var(--white);
+    border: 1px solid var(--gray-lighter);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
     position: sticky;
     top: 16px;
 }
 
-.sidebar__section {
-    margin-bottom: 20px;
-}
-
-.sidebar__label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--cbp-primary-dark);
-    margin: 0 0 8px;
-}
-
-.sidebar__search-input {
-    width: 100%;
-    padding: 9px 10px;
-    font-size: 14px;
-    font-family: inherit;
-    border: 1px solid var(--cbp-line-strong);
-    border-radius: var(--cbp-radius);
-}
-
-.sidebar__search-input:focus {
-    outline: 3px solid var(--cbp-focus);
-    outline-offset: 0;
-    border-color: var(--cbp-primary);
-}
-
-.sidebar__summary {
-    font-size: 12.5px;
-    color: var(--cbp-muted);
-    margin-bottom: 8px;
-}
-
-.sidebar__reset {
-    display: inline-block;
-    background: none;
-    border: 0;
-    padding: 0 0 16px;
-    color: var(--ace-brand-dark);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.facet-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.facet-pill {
-    width: 100%;
+.sidebar-title-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    font-family: inherit;
-    font-size: 13px;
-    text-align: left;
+    margin-bottom: 14px;
+}
+
+.sidebar-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--brand-primary);
+}
+
+.clear-filters-btn {
     background: none;
-    border: 1px solid transparent;
-    border-radius: var(--cbp-radius);
-    padding: 7px 10px;
-    color: var(--cbp-text-darker);
+    border: 0;
+    padding: 0;
+    color: var(--link-blue);
+    font-size: 13px;
+    font-weight: 700;
     cursor: pointer;
 }
 
-.facet-pill:hover {
-    background: var(--cbp-surface-alt);
+.clear-filters-btn:hover {
+    text-decoration: underline;
 }
 
-.facet-pill_active {
-    background: var(--cbp-primary-light);
-    border-color: var(--cbp-primary);
-    color: var(--cbp-primary-dark);
+.sidebar h3 {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+    margin: 0 0 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gray-light);
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-family: inherit;
+    color: var(--gray-darker);
+}
+
+.search-input:focus {
+    outline: 2px solid var(--brand-info);
+    outline-offset: 1px;
+    border-color: var(--brand-info);
+}
+
+.total-count {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--gray);
+    margin: 14px 0 18px;
+}
+
+.filter-group {
+    margin-bottom: 22px;
+}
+
+.filter-option {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-family: inherit;
+    color: var(--gray-dark);
+    background: none;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+    margin-bottom: 2px;
+}
+
+.filter-option:hover {
+    background: var(--gray-lightest);
+}
+
+.filter-option_selected {
+    background: var(--state-info-bg);
+    color: var(--brand-primary);
     font-weight: 700;
 }
 
-.facet-pill__count {
-    font-size: 11px;
-    font-weight: 700;
-    background: rgba(0, 0, 0, 0.08);
-    border-radius: 999px;
-    padding: 1px 7px;
-    flex: none;
+.filter-count {
+    background: var(--gray-lighter);
+    color: var(--gray-dark);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 10px;
 }
 
-.facet-pill_active .facet-pill__count {
-    background: rgba(255, 255, 255, 0.6);
+.filter-option_selected .filter-count {
+    background: var(--brand-primary);
+    color: var(--white);
 }
 
-@media (max-width: 820px) {
+@media (max-width: 900px) {
     :host {
         width: 100%;
         flex-basis: auto;

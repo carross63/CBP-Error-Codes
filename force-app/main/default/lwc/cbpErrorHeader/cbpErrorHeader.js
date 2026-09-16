@@ -5,6 +5,6 @@ export default class CbpErrorHeader extends LightningElement {
     @api totalCount = 0;
 
     get formattedCount() {
-        return this.totalCount ? this.totalCount.toLocaleString() : '';
+        return this.totalCount ? `${this.totalCount.toLocaleString()} condition codes` : '';
     }
 }

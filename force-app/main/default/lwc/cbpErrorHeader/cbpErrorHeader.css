@@ -3,112 +3,138 @@
 }
 
 .notice-bar {
-    background: var(--cbp-gold-5);
-    border-bottom: 1px solid var(--cbp-gold-20);
+    background: var(--state-warning-bg);
+    border-bottom: 1px solid var(--brand-warning);
     font-size: 12.5px;
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 7px 20px;
-    color: var(--cbp-text-darker);
+    padding: 7px 48px;
+    color: var(--gray-dark);
 }
 
 .notice-bar__tag {
-    background: var(--cbp-gold-30);
-    color: #1b1b1b;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    font-size: 10.5px;
-    padding: 3px 8px;
-    border-radius: var(--cbp-radius);
+    background: var(--brand-warning);
+    color: var(--gray-darker);
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 4px;
     white-space: nowrap;
     text-transform: uppercase;
 }
 
-.masthead {
-    background: var(--cbp-surface);
+.global-header {
+    background: var(--white);
+    padding: 14px 48px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    z-index: 3;
+}
+
+.global-header-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    padding: 14px 20px;
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.12);
-    position: relative;
-    z-index: 3;
-    border-bottom: 3px solid var(--ace-brand);
+    gap: 20px;
 }
 
-.masthead__brand {
+.header-left {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
 }
 
-.masthead__mark {
-    width: 44px;
-    height: 44px;
+.header-logo {
+    width: 52px;
+    height: 52px;
     flex: none;
 }
 
-.masthead__agency {
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--cbp-accent);
+.eyebrow {
+    color: #1d8fbf;
+    font-size: 13.5px;
     font-weight: 700;
+    letter-spacing: 0.03em;
+    margin: 0 0 2px;
 }
 
-.masthead__app {
-    font-size: 21px;
-    font-weight: 700;
-    color: var(--cbp-navy-deep);
-    margin: 2px 0 0;
-}
-
-.masthead__meta {
+h1 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--brand-primary);
+    font-weight: 800;
     display: flex;
     align-items: center;
+    gap: 12px;
 }
 
-.masthead__count {
+.header-badge {
+    background: var(--brand-warning);
+    color: var(--gray-darker);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    padding: 5px 10px;
+    border-radius: 4px;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-count {
     font-size: 13px;
-    font-weight: 600;
-    color: var(--cbp-primary-dark);
-    background: var(--cbp-primary-light);
+    font-weight: 700;
+    color: var(--brand-primary);
+    background: var(--state-primary-bg);
     border-radius: 999px;
-    padding: 6px 14px;
+    padding: 8px 16px;
     white-space: nowrap;
 }
 
-.portal-nav {
-    background: var(--cbp-surface);
-    border-bottom: 1px solid var(--cbp-line);
-}
-
-.portal-nav ul {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 20px;
-    list-style: none;
+.tabs {
     display: flex;
-    gap: 2px;
+    gap: 32px;
+    padding: 0 48px;
+    background: var(--tabs-bg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    overflow-x: auto;
 }
 
-.portal-nav__item {
-    padding: 12px 4px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--cbp-muted);
-    border-bottom: 4px solid transparent;
+.tab {
+    padding: 14px 2px 12px;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--white);
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
 }
 
-.portal-nav__item_active {
-    color: var(--ace-brand-dark);
-    border-bottom-color: var(--ace-brand);
+.tab_active {
+    font-weight: 700;
+    border-bottom-color: var(--white);
 }
 
 @media (max-width: 620px) {
-    .masthead {
+    .global-header {
+        padding: 14px 20px;
+    }
+
+    .notice-bar {
+        padding: 7px 20px;
+    }
+
+    .tabs {
+        padding: 0 20px;
+    }
+
+    .global-header-row {
         flex-wrap: wrap;
     }
 }

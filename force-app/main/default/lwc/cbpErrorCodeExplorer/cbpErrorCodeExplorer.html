@@ -19,20 +19,19 @@
                 <c-cbp-error-sidebar
                     search-term={searchTerm}
                     selected-category={selectedCategory}
-                    selected-flow={selectedFlow}
                     categories={categories}
-                    flows={flows}
                     total-count={totalCount}
                     filtered-count={filteredCount}
                     has-active-filters={hasActiveFilters}
                     onsearch={handleSearch}
                     oncategorychange={handleCategoryChange}
-                    onflowchange={handleFlowChange}
                     onreset={handleResetFilters}
                 ></c-cbp-error-sidebar>
 
                 <c-cbp-error-table errors={filteredErrors} page-size={pageSize}></c-cbp-error-table>
             </div>
         </template>
+
+        <c-cbp-error-footer entity-name="U.S. Customs and Border Protection"></c-cbp-error-footer>
     </div>
 </template>

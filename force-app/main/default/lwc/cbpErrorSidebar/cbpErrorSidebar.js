@@ -6,9 +6,7 @@ const ALL_VALUE = '';
 export default class CbpErrorSidebar extends LightningElement {
     @api searchTerm = '';
     @api selectedCategory = ALL_VALUE;
-    @api selectedFlow = ALL_VALUE;
     @api categories = [];
-    @api flows = [];
     @api totalCount = 0;
     @api filteredCount = 0;
     @api hasActiveFilters = false;
@@ -25,37 +23,16 @@ export default class CbpErrorSidebar extends LightningElement {
     get categoryOptions() {
         return this.categories.map((entry) => ({
             ...entry,
-            isActive: entry.value === this.selectedCategory,
-            cssClass: this.pillClass(entry.value === this.selectedCategory)
+            cssClass: this.optionClass(entry.value === this.selectedCategory)
         }));
-    }
-
-    get flowOptions() {
-        return this.flows.map((entry) => ({
-            ...entry,
-            isActive: entry.value === this.selectedFlow,
-            cssClass: this.pillClass(entry.value === this.selectedFlow)
-        }));
-    }
-
-    get allCategoriesActive() {
-        return this.selectedCategory === ALL_VALUE;
-    }
-
-    get allFlowsActive() {
-        return this.selectedFlow === ALL_VALUE;
     }
 
     get allCategoriesClass() {
-        return this.pillClass(this.allCategoriesActive);
+        return this.optionClass(this.selectedCategory === ALL_VALUE);
     }
 
-    get allFlowsClass() {
-        return this.pillClass(this.allFlowsActive);
-    }
-
-    pillClass(isActive) {
-        return isActive ? 'facet-pill facet-pill_active' : 'facet-pill';
+    optionClass(isSelected) {
+        return isSelected ? 'filter-option filter-option_selected' : 'filter-option';
     }
 
     handleSearchInput(event) {
@@ -71,13 +48,8 @@ export default class CbpErrorSidebar extends LightningElement {
         this.dispatchEvent(new CustomEvent('categorychange', { detail: { value } }));
     }
 
-    handleFlowClick(event) {
-        const value = event.currentTarget.dataset.value || ALL_VALUE;
-        this.dispatchEvent(new CustomEvent('flowchange', { detail: { value } }));
-    }
-
     handleReset() {
-        const searchBox = this.template.querySelector('.sidebar__search-input');
+        const searchBox = this.template.querySelector('.search-input');
         if (searchBox) {
             searchBox.value = '';
         }

@@ -1,0 +1,136 @@
+:host {
+    display: block;
+    margin-top: 24px;
+}
+
+.footer-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border-top: 1px solid var(--gray-lighter);
+    padding: 0 48px;
+    flex-wrap: wrap;
+}
+
+.footer-nav-link {
+    padding: 22px 24px;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--gray-darker);
+    border-right: 1px solid var(--gray-lighter);
+}
+
+.footer-nav-link:last-child {
+    border-right: none;
+}
+
+.footer-entity {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    background: var(--gray-lightest);
+    padding: 24px 48px;
+}
+
+.footer-entity-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.footer-logo-circle {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.footer-entity-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--brand-primary);
+}
+
+.footer-entity-right {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-social-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: var(--gray-lighter);
+    color: var(--gray-darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-social-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.footer-gov {
+    background: var(--brand-primary);
+    padding: 32px 48px;
+}
+
+.footer-gov-inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
+    max-width: 1000px;
+}
+
+.footer-gov-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+}
+
+.footer-gov-title {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--white);
+}
+
+.footer-gov-subtitle {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--white);
+    max-width: 520px;
+}
+
+.footer-gov-image {
+    width: 90px;
+    aspect-ratio: 4 / 5;
+    border: 2px solid var(--white);
+    background: linear-gradient(135deg, #1d8fbf 0%, #0b4c82 100%);
+    flex: none;
+}
+
+.footer-copyright {
+    margin: 20px 0 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+@media (max-width: 620px) {
+    .footer-nav,
+    .footer-entity,
+    .footer-gov {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .footer-gov-inner {
+        flex-direction: column;
+    }
+}

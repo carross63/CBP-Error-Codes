@@ -1,62 +1,42 @@
 /*
- * Design tokens below mirror the CBP Design System (USWDS-derived) and the
- * live ACE Secure Data Portal's own branding tokens (brand red #d51e10 /
- * #a6170c, Salesforce Sans). Defined once here on :host so every child
- * component (header, sidebar, table) inherits them through the shadow tree.
+ * Design tokens mirror the "ACE Secure Data Portal" reference mockup
+ * supplied for this build (brand navy #00416a, link blue #145faa,
+ * Segoe UI). Defined once here on :host so every child component
+ * (header, sidebar, table, footer) inherits them through the shadow tree.
  */
 :host {
-    --cbp-blue-10: #cfe8ff;
-    --cbp-blue-70: #0b4778;
-    --cbp-blue-80: #112f4e;
-    --cbp-blue-cool-50: #0d7ea2;
-    --cbp-blue-warm-70: #1a4480;
-    --cbp-gray-cool-3: #f5f6f7;
-    --cbp-gray-cool-4: #f1f3f6;
-    --cbp-gray-cool-10: #dfe1e2;
-    --cbp-gray-cool-20: #c6cace;
-    --cbp-gray-cool-30: #a9aeb1;
-    --cbp-gray-cool-60: #565c65;
-    --cbp-gray-cool-80: #2d2e2f;
-    --cbp-gray-warm-70: #454540;
-    --cbp-gray-warm-80: #2e2e2a;
-    --cbp-green-50: #538200;
-    --cbp-gold-5: #fef0c8;
-    --cbp-gold-20: #ffbe2e;
-    --cbp-gold-30: #e5a000;
-    --cbp-red-50: #e52207;
-    --cbp-red-60: #b50909;
-    --cbp-red-10: #fde0db;
-    --cbp-text-darkest: #1b1b1b;
-    --cbp-text-darker: #454545;
+    --brand-primary: #00416a;
+    --brand-info: #1460aa;
+    --brand-danger: #a00000;
+    --brand-warning: #f09511;
+    --state-primary-bg: #ecf1f4;
+    --state-info-bg: #edf3f9;
+    --state-danger-bg: #f8ecec;
+    --state-warning-bg: #fef7ed;
+    --gray-darker: #222222;
+    --gray-dark: #333333;
+    --gray: #555555;
+    --gray-medium: #808080;
+    --gray-light: #aaaaaa;
+    --gray-lighter: #eeeeee;
+    --gray-lightest: #f6f6f6;
+    --page-bg: #fafafa;
+    --white: #ffffff;
+    --link-blue: #145faa;
+    --tabs-bg: #00548c;
 
-    /* ACE Portal's own live brand accent (Salesforce Experience Cloud site) */
-    --ace-brand: #d51e10;
-    --ace-brand-dark: #a6170c;
-
-    --cbp-navy: var(--cbp-blue-70);
-    --cbp-navy-deep: var(--cbp-blue-80);
-    --cbp-primary: var(--cbp-blue-70);
-    --cbp-primary-dark: var(--cbp-blue-80);
-    --cbp-primary-light: var(--cbp-blue-10);
-    --cbp-accent: var(--cbp-blue-cool-50);
-    --cbp-focus: var(--cbp-blue-warm-70);
-    --cbp-ink: var(--cbp-text-darkest);
-    --cbp-muted: var(--cbp-gray-cool-60);
-    --cbp-line: var(--cbp-gray-cool-10);
-    --cbp-line-strong: var(--cbp-gray-cool-30);
-    --cbp-page: var(--cbp-gray-cool-3);
-    --cbp-surface: #ffffff;
-    --cbp-surface-alt: var(--cbp-gray-cool-4);
-    --cbp-radius: 4px;
-    --cbp-radius-lg: 8px;
-    --cbp-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.06);
-    --cbp-font: 'Salesforce Sans', Arial, Helvetica, sans-serif;
-    --cbp-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    --radius-sm: 5px;
+    --radius-md: 6px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+    --font: 'Segoe UI', Arial, sans-serif;
+    --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 
     display: block;
-    font-family: var(--cbp-font);
-    color: var(--cbp-ink);
-    background: var(--cbp-page);
+    font-family: var(--font);
+    color: var(--gray-darker);
+    background: var(--page-bg);
 }
 
 .cbp-app {
@@ -68,13 +48,12 @@
 .cbp-app__body {
     display: flex;
     align-items: flex-start;
-    gap: 0;
     flex: 1 1 auto;
     max-width: 1280px;
     width: 100%;
     margin: 0 auto;
-    padding: 20px 16px 48px;
-    gap: 20px;
+    padding: 16px 48px 48px;
+    gap: 24px;
 }
 
 .cbp-app__status {
@@ -86,12 +65,13 @@
 }
 
 .cbp-app__status_error {
-    color: var(--cbp-red-60);
+    color: var(--brand-danger);
     font-weight: 600;
 }
 
-@media (max-width: 820px) {
+@media (max-width: 900px) {
     .cbp-app__body {
         flex-direction: column;
+        padding: 16px 20px 40px;
     }
 }
