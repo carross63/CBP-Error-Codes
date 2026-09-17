@@ -1,6 +1,17 @@
 <template>
     <div class="table-card">
         <template lwc:if={hasResults}>
+            <div class="mobile-toolbar-actions">
+                <button type="button" class="toolbar-btn" onclick={handleOpenSortSheet}>
+                    <svg class="toolbar-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 4V20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M8 8L12 4L16 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 16L12 20L16 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Sort: {currentSortLabel}</span>
+                </button>
+            </div>
+
             <div class="table-wrap">
                 <table>
                     <thead>
@@ -114,6 +125,36 @@
                 </table>
             </div>
 
+            <div class="card-list">
+                <template for:each={pageRows} for:item="row">
+                    <div key={row.id} class="card-list__item">
+                        <div class="row-card" data-id={row.id} onclick={handleRowToggle}>
+                            <div class="row-card-top">
+                                <div class="row-card-title">
+                                    <span class="code-pill">{row.code}</span>
+                                    <span class="narrative">{row.narrative}</span>
+                                </div>
+                            </div>
+                            <div class="row-card-meta">
+                                <span class="meta-item"><span class="meta-label">Category:</span>{row.category}</span>
+                                <span class="meta-item">&middot;</span>
+                                <span class="meta-item"><span class="meta-label">Flow:</span>{row.flow}</span>
+                                <span class="meta-item">&middot;</span>
+                                <span class="meta-item"><span class="meta-label">Updated:</span>{row.displayDate}</span>
+                            </div>
+                            <button type="button" class="view-details" aria-expanded={row.isExpanded}>
+                                {row.toggleLabel}
+                            </button>
+                        </div>
+                        <template lwc:if={row.isExpanded}>
+                            <div class="card-detail">
+                                <p class="card-detail__explanation">{row.explanation}</p>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
             <div class="table-footer">
                 <div class="rows-per-page">
                     <label for="rowsPerPage">Rows per page</label>
@@ -162,4 +203,36 @@
             </div>
         </template>
     </div>
+
+    <!-- Sort bottom sheet (mobile) -->
+    <template lwc:if={isSortSheetOpen}>
+        <div class="sheet-backdrop open" onclick={handleCloseSortSheet}></div>
+        <div class="filter-sheet open" role="dialog" aria-modal="true" aria-label="Sort options">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h2>Sort by</h2>
+                <button type="button" class="sheet-close" onclick={handleCloseSortSheet}>
+                    Close
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="sheet-body">
+                <template for:each={sortPresetOptions} for:item="preset">
+                    <button
+                        type="button"
+                        key={preset.key}
+                        class={preset.cssClass}
+                        data-key={preset.key}
+                        onclick={handleSortPresetClick}
+                    >
+                        <span>{preset.label}</span>
+                        <span class="check">&check;</span>
+                    </button>
+                </template>
+            </div>
+        </div>
+    </template>
 </template>

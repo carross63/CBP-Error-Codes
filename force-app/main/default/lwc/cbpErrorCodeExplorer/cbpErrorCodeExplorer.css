@@ -69,9 +69,10 @@
     font-weight: 600;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
     .cbp-app__body {
         flex-direction: column;
-        padding: 16px 20px 40px;
+        padding: 0 16px 32px;
+        gap: 0;
     }
 }

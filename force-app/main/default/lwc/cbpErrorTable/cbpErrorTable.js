@@ -2,6 +2,19 @@ import { LightningElement, api } from 'lwc';
 
 const DEFAULT_PAGE_SIZE = 25;
 const PAGE_SIZE_OPTIONS = [10, 25, 50];
+const FIELD_LABELS = {
+    code: 'Code',
+    narrative: 'Narrative',
+    category: 'Category',
+    flow: 'Flow',
+    dateUpdated: 'Updated'
+};
+const SORT_PRESETS = [
+    { key: 'code-asc', label: 'Code (ascending)', field: 'code', direction: 'asc' },
+    { key: 'code-desc', label: 'Code (descending)', field: 'code', direction: 'desc' },
+    { key: 'updated-desc', label: 'Recently updated', field: 'dateUpdated', direction: 'desc' },
+    { key: 'category-asc', label: 'Category (A–Z)', field: 'category', direction: 'asc' }
+];
 
 export default class CbpErrorTable extends LightningElement {
     @api pageSize = DEFAULT_PAGE_SIZE;
@@ -12,6 +25,7 @@ export default class CbpErrorTable extends LightningElement {
     sortDirection = 'asc';
     expandedId = null;
     selectedPageSize = null;
+    isSortSheetOpen = false;
 
     @api
     get errors() {
@@ -144,6 +158,26 @@ export default class CbpErrorTable extends LightningElement {
         return this.totalCount > 0;
     }
 
+    get currentSortLabel() {
+        const matchedPreset = SORT_PRESETS.find(
+            (preset) => preset.field === this.sortField && preset.direction === this.sortDirection
+        );
+        if (matchedPreset) {
+            return matchedPreset.label.replace(/\s*\(.*\)/, '');
+        }
+        return FIELD_LABELS[this.sortField] || this.sortField;
+    }
+
+    get sortPresetOptions() {
+        return SORT_PRESETS.map((preset) => {
+            const isSelected = preset.field === this.sortField && preset.direction === this.sortDirection;
+            return {
+                ...preset,
+                cssClass: isSelected ? 'sort-option sort-option_selected' : 'sort-option'
+            };
+        });
+    }
+
     get codeHeaderClass() {
         return this.headerClass('code');
     }
@@ -177,6 +211,24 @@ export default class CbpErrorTable extends LightningElement {
     handleRowToggle(event) {
         const id = event.currentTarget.dataset.id;
         this.expandedId = this.expandedId === id ? null : id;
+    }
+
+    handleOpenSortSheet() {
+        this.isSortSheetOpen = true;
+    }
+
+    handleCloseSortSheet() {
+        this.isSortSheetOpen = false;
+    }
+
+    handleSortPresetClick(event) {
+        const key = event.currentTarget.dataset.key;
+        const preset = SORT_PRESETS.find((entry) => entry.key === key);
+        if (preset) {
+            this.sortField = preset.field;
+            this.sortDirection = preset.direction;
+        }
+        this.isSortSheetOpen = false;
     }
 
     handlePageSizeChange(event) {

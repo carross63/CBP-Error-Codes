@@ -1,4 +1,5 @@
 <template>
+    <!-- Desktop filter panel -->
     <aside class="sidebar" aria-label="Error code filters">
         <div class="sidebar-title-row">
             <h2 class="sidebar-title">Filters</h2>
@@ -36,4 +37,68 @@
             </template>
         </div>
     </aside>
+
+    <!-- Mobile compact bar: search stays reachable, filters open a bottom sheet -->
+    <div class="mobile-filter-bar">
+        <div class="mobile-search-group">
+            <label class="sr-only" for="mobile-search-input">Search</label>
+            <input
+                id="mobile-search-input"
+                type="search"
+                class="search-input"
+                placeholder="Code or keyword, e.g. 439, quantity..."
+                value={searchTerm}
+                oninput={handleSearchInput}
+            />
+            <p class="total-count">{resultsSummary}</p>
+        </div>
+        <button type="button" class="toolbar-btn" onclick={handleOpenFilterSheet}>
+            <svg class="toolbar-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M19.14,12.94a7.14,7.14 0 0,0 0,-1.88l2.03,-1.58a0.5,0.5 0 0,0 0.12,-0.64l-1.92,-3.32a0.5,0.5 0 0,0 -0.61,-0.22l-2.39,0.96a7.03,7.03 0 0,0 -1.62,-0.94l-0.36,-2.54a0.5,0.5 0 0,0 -0.5,-0.42h-3.84a0.5,0.5 0 0,0 -0.5,0.42l-0.36,2.54a7.03,7.03 0 0,0 -1.62,0.94l-2.39,-0.96a0.5,0.5 0 0,0 -0.61,0.22l-1.92,3.32a0.5,0.5 0 0,0 0.12,0.64l2.03,1.58a7.14,7.14 0 0,0 0,1.88l-2.03,1.58a0.5,0.5 0 0,0 -0.12,0.64l1.92,3.32a0.5,0.5 0 0,0 0.61,0.22l2.39,-0.96c0.49,0.38 1.03,0.7 1.62,0.94l0.36,2.54a0.5,0.5 0 0,0 0.5,0.42h3.84a0.5,0.5 0 0,0 0.5,-0.42l0.36,-2.54c0.59,-0.24 1.13,-0.56 1.62,-0.94l2.39,0.96a0.5,0.5 0 0,0 0.61,-0.22l1.92,-3.32a0.5,0.5 0 0,0 -0.12,-0.64l-2.03,-1.58ZM12,15.5A3.5,3.5 0 1,1 12,8.5a3.5,3.5 0 0,1 0,7Z"/>
+            </svg>
+            <span>Filters</span>
+            <span class="count-badge">{filterCount}</span>
+        </button>
+    </div>
+
+    <!-- Filter bottom sheet (mobile) -->
+    <template lwc:if={isFilterSheetOpen}>
+        <div class="sheet-backdrop open" onclick={handleCloseFilterSheet}></div>
+        <div class="filter-sheet open" role="dialog" aria-modal="true" aria-label="Filters">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h2>Filters</h2>
+                <button type="button" class="sheet-close" onclick={handleCloseFilterSheet}>
+                    Close
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="sheet-body">
+                <div class="filter-group">
+                    <h3>Category</h3>
+                    <button type="button" class={allCategoriesClass} data-value="" onclick={handleCategoryClick}>
+                        <span>All categories</span>
+                    </button>
+                    <template for:each={categoryOptions} for:item="cat">
+                        <button
+                            type="button"
+                            key={cat.value}
+                            class={cat.cssClass}
+                            data-value={cat.value}
+                            onclick={handleCategoryClick}
+                        >
+                            <span>{cat.label}</span>
+                            <span class="filter-count">{cat.count}</span>
+                        </button>
+                    </template>
+                </div>
+            </div>
+            <div class="sheet-footer">
+                <button type="button" class="btn-clear" onclick={handleReset}>Clear all</button>
+            </div>
+        </div>
+    </template>
 </template>

@@ -11,6 +11,7 @@ export default class CbpErrorSidebar extends LightningElement {
     @api filteredCount = 0;
     @api hasActiveFilters = false;
 
+    isFilterSheetOpen = false;
     searchDebounceTimer;
 
     get resultsSummary() {
@@ -18,6 +19,10 @@ export default class CbpErrorSidebar extends LightningElement {
             return `${this.totalCount.toLocaleString()} total codes`;
         }
         return `${this.filteredCount.toLocaleString()} of ${this.totalCount.toLocaleString()} codes`;
+    }
+
+    get filterCount() {
+        return this.selectedCategory ? 1 : 0;
     }
 
     get categoryOptions() {
@@ -46,13 +51,22 @@ export default class CbpErrorSidebar extends LightningElement {
     handleCategoryClick(event) {
         const value = event.currentTarget.dataset.value || ALL_VALUE;
         this.dispatchEvent(new CustomEvent('categorychange', { detail: { value } }));
+        this.isFilterSheetOpen = false;
+    }
+
+    handleOpenFilterSheet() {
+        this.isFilterSheetOpen = true;
+    }
+
+    handleCloseFilterSheet() {
+        this.isFilterSheetOpen = false;
     }
 
     handleReset() {
-        const searchBox = this.template.querySelector('.search-input');
-        if (searchBox) {
-            searchBox.value = '';
-        }
+        this.template.querySelectorAll('.search-input').forEach((input) => {
+            input.value = '';
+        });
+        this.isFilterSheetOpen = false;
         this.dispatchEvent(new CustomEvent('reset'));
     }
 }
